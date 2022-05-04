@@ -63,3 +63,4 @@ group :test do
 end
 
 gem "shakapacker", "= 6.2"
+gem 'faraday'
