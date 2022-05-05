@@ -6,5 +6,6 @@ Rails.application.routes.draw do
   root to: redirect('/world')
 
   get 'world', to: 'world#index'
+  get 'cart', to: 'world#index'
   get 'world/:name', to: 'world#index'
 end

@@ -17,6 +17,8 @@
 import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
+import store from './redux/store';
+import { Provider } from 'react-redux';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -24,7 +26,9 @@ const root = createRoot(container);
 document.addEventListener('DOMContentLoaded', () => {
   root.render(
     <StrictMode>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </StrictMode>
   );
 });

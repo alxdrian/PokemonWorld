@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { fetchPokemon } from '../services/PokemonFetch';
 import { ContentRegular, HeadingMedium } from "./UI/Text";
 import { colorTypes } from "../helpers/colorTypes";
@@ -8,9 +9,11 @@ import { IconTypes } from './IconTypes';
 import { ButtonContainer } from './UI/Container';
 import { Button } from './UI/Button';
 import { PokeBallIcon } from './UI/Icon';
+import { addToCart } from '../redux/reducers/cartSlice';
 
 const PokemonCard = ({ id, setWildPokemon }) => {
     const [pokemon, setPokemon] = useState({});
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const data = async () => {
@@ -22,6 +25,17 @@ const PokemonCard = ({ id, setWildPokemon }) => {
 
     function leavePokemon(e) {
         e.preventDefault();
+        setWildPokemon({
+            name: "",
+            url: "",
+        });
+    }
+
+    function catchPokemon(e) {
+        e.preventDefault();
+        console.log("Caught Pokemon");
+        console.log(pokemon);
+        dispatch(addToCart(pokemon));
         setWildPokemon({
             name: "",
             url: "",
@@ -86,7 +100,7 @@ const PokemonCard = ({ id, setWildPokemon }) => {
                     </StatList>
                 </StatsContainer>
                 <CardContent>
-                    <Button>
+                    <Button onClick={catchPokemon}>
                         <PokeBallIcon />
                         <ContentRegular>ATRAPAR !</ContentRegular>
                     </Button>
