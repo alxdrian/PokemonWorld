@@ -6,8 +6,10 @@ import { ContentRegular, HeadingMedium } from "./UI/Text";
 import { colorTypes } from "../helpers/colorTypes";
 import { IconTypes } from './IconTypes';
 import { ButtonContainer } from './UI/Container';
+import { Button } from './UI/Button';
+import { PokeBallIcon } from './UI/Icon';
 
-const PokemonCard = ({ id }) => {
+const PokemonCard = ({ id, setWildPokemon }) => {
     const [pokemon, setPokemon] = useState({});
 
     useEffect(() => {
@@ -18,13 +20,21 @@ const PokemonCard = ({ id }) => {
         data();
     }, []);
 
+    function leavePokemon(e) {
+        e.preventDefault();
+        setWildPokemon({
+            name: "",
+            url: "",
+        });
+    }
+
     return (
         <PokeCard>
             {pokemon.name && 
             <>
                 <img src={pokemon.sprites.other['official-artwork'].front_default} alt={pokemon.name} />
-                <PokeName>
-                    <HeadingMedium>{pokemon.name}</HeadingMedium>
+                <CardContent>
+                    <HeadingMedium>#{pokemon.id} {pokemon.name}</HeadingMedium>
                     <ButtonContainer>
                     {pokemon.types && pokemon.types.map(type => (
                             <TypeIcon key={type.type.name} color={type.type.name}>
@@ -32,7 +42,7 @@ const PokemonCard = ({ id }) => {
                             </TypeIcon>
                         ))}
                     </ButtonContainer>
-                </PokeName>
+                </CardContent>
                 <StatsContainer>
                     <StatList>
                         <Stat>
@@ -75,6 +85,15 @@ const PokemonCard = ({ id }) => {
                         </Stat>
                     </StatList>
                 </StatsContainer>
+                <CardContent>
+                    <Button>
+                        <PokeBallIcon />
+                        <ContentRegular>ATRAPAR !</ContentRegular>
+                    </Button>
+                    <Button onClick={leavePokemon}>
+                        <ContentRegular>ESCAPAR</ContentRegular>
+                    </Button>
+                </CardContent>
             </>
             }
         </PokeCard>
@@ -159,8 +178,9 @@ const TypeIcon = styled.div`
   }
 `;
 
-const PokeName = styled.div`
+const CardContent = styled.div`
    display: flex;
    justify-content: space-between;
    align-items: center;
+   font-weight: bold;
 `;

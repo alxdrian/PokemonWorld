@@ -47,9 +47,9 @@ const LocationArea = ({id}) => {
             const response = await fetchLocationArea(id);
             const responsePokemon = response.pokemon_encounters.filter(pokemon => pokemon.version_details.some(version => version.version.name === "red"))
             const pokes = responsePokemon.map(pokemon => pokemon = {
-                    name: pokemon.pokemon.name,
-                    url: pokemon.pokemon.url,
-                    encounter_details: pokemon.version_details.find(version => version.version.name === "red").encounter_details[0]
+                name: pokemon.pokemon.name,
+                url: pokemon.pokemon.url,
+                encounter_details: pokemon.version_details.find(version => version.version.name === "red").encounter_details[0]
             })
             
             pokes.length > 0 ? setPokemon(pokes) : setPokemon(defaultPokes);
@@ -164,7 +164,7 @@ const LocationArea = ({id}) => {
             <>
                 <GameALert>A wild {wildPokemon.name} appeared!</GameALert>
                 <GameModal>
-                    <PokemonCard id={wildPokemon.url.split("/")[6]} />
+                    <PokemonCard id={wildPokemon.url.split("/")[6]} setWildPokemon={setWildPokemon}/>
                 </GameModal>
             </>
             )}
