@@ -9,8 +9,8 @@ export const Trainer = styled.div`
     ${props => props.direction && `transform: rotate(${props.direction}deg)`};
    
     img {
-        width: 100%;
-        height: 100%;
+        width: 64px;
+        height: 64px;
         object-fit: contain;
     }
 `;

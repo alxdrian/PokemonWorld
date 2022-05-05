@@ -28,5 +28,10 @@ export const NavBar = styled.nav`
             color: #43b2a7;
         }   
     }
+
+    .selected {
+        background-color: rgb(228 228 228);
+        color: #43b2a7;
+    }
   }
 `

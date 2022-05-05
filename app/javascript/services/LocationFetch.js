@@ -12,7 +12,7 @@ export const fetchLocations = async () => {
     .catch(err => {
         console.log(err);
     });
-}
+};
 
 export const fetchLocation = async (id) => {
     return axios(`/location/${id}`, {
@@ -24,4 +24,16 @@ export const fetchLocation = async (id) => {
     .catch(err => {
         console.log(err);
     });
-}
+};
+
+export const fetchLocationArea = async (id) => {
+    return axios(`/location-area/${id}`, {
+        method: "GET",
+    })
+    .then(res => {
+        return res.data
+    })
+    .catch(err => {
+        console.log(err);
+    });
+};
