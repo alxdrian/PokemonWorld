@@ -1,21 +1,43 @@
 import React from "react";
+import styled from "@emotion/styled";
 import { useSelector } from "react-redux";
+import { PokemonItemCart } from "../components/PokemonCard";
+import Header from "../components/UI/Header";
+import { HeadingMedium } from "../components/UI/Text";
 
 const Cart = () => {
     const cart = useSelector(state => state.cart.cart);
-    console.log(cart);
 
     return (
-        <div>
-            <h1>Cart</h1>
-            {cart.map(item => (
-                <div key={item.id}>
-                    <h2>{item.pokemon.name}</h2>
-                    <img src={item.pokemon.sprites.other['official-artwork'].front_default} alt={item.pokemon.name} />
-                </div>
-            ))}
-        </div>
+        <>
+            <Header>
+                <HeadingMedium>Cart</HeadingMedium>
+            </Header>
+            <CartStep>
+                <PokemonList>
+                    {Object.keys(cart).map((key, index) => 
+                        cart[key] && <PokemonItemCart key={index} pokemon={cart[key]} cartId={key}/>
+                    )}
+                </PokemonList>
+            </CartStep>
+            
+        </>
     );
 }
 
 export default Cart;
+
+const CartStep = styled.div`
+    width: 100%;
+    min-height: calc(100% - 60px);
+    padding: 20px;
+    background-color: #43b2a7;
+`;
+
+const PokemonList = styled.div`
+   display: flex; 
+   flex-wrap: wrap;
+   justify-content: space-around;
+   align-items: center;
+   gap: 20px;
+`;

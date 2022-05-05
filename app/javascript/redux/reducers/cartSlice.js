@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 
 const initialState = {
-    cart: [],
+    cart: {},
     step: 1
 };
 
@@ -12,10 +12,11 @@ const cartSlice = createSlice({
     reducers: {
         addToCart: (state, action) => {
             console.log("Adding to cart");
-            state.cart = [...state.cart, { id: uuidv4(), pokemon: action.payload }];
+            const id = uuidv4();
+            state.cart[id] = action.payload;
         },
         removeFromCart: (state, action) => {
-            state.cart = state.cart.filter(item => item.id !== action.payload);
+            state.cart[action.payload] = undefined;
         },
         setStep: (state, action) => {
             state.step = action.payload;

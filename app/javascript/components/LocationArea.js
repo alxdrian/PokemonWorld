@@ -4,7 +4,7 @@ import { GameContainer, AreaMapContainer, GameALert, GameModal } from "../compon
 import { Trainer } from "../components/Trainer";
 import { fetchLocationArea } from "../services/LocationFetch";
 import WildPokemon from "./WildPokemon";
-import PokemonCard from "./PokemonCard";
+import { PokemonEncounterCard } from "./PokemonCard";
 
 const LocationArea = ({id}) => {
     const [moving, setMoving] = useState(false);
@@ -164,7 +164,7 @@ const LocationArea = ({id}) => {
             <>
                 <GameALert>A wild {wildPokemon.name} appeared!</GameALert>
                 <GameModal>
-                    <PokemonCard id={wildPokemon.url.split("/")[6]} setWildPokemon={setWildPokemon}/>
+                    <PokemonEncounterCard id={wildPokemon.url.split("/")[6]} setWildPokemon={setWildPokemon}/>
                 </GameModal>
             </>
             )}

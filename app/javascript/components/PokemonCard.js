@@ -3,15 +3,15 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchPokemon } from '../services/PokemonFetch';
-import { ContentRegular, HeadingMedium } from "./UI/Text";
+import { ContentRegular, HeadingMedium, HeadingSmall } from "./UI/Text";
 import { colorTypes } from "../helpers/colorTypes";
 import { IconTypes } from './IconTypes';
 import { ButtonContainer } from './UI/Container';
-import { Button } from './UI/Button';
-import { PokeBallIcon } from './UI/Icon';
-import { addToCart } from '../redux/reducers/cartSlice';
+import { Button, IconButton } from './UI/Button';
+import { PokeBallIcon, TrashIcon } from './UI/Icon';
+import { addToCart, removeFromCart } from '../redux/reducers/cartSlice';
 
-const PokemonCard = ({ id, setWildPokemon }) => {
+export const PokemonEncounterCard = ({ id, setWildPokemon }) => {
     const [pokemon, setPokemon] = useState({});
     const dispatch = useDispatch();
 
@@ -46,59 +46,18 @@ const PokemonCard = ({ id, setWildPokemon }) => {
         <PokeCard>
             {pokemon.name && 
             <>
-                <img src={pokemon.sprites.other['official-artwork'].front_default} alt={pokemon.name} />
+                <img src={pokemon.sprites.other['official-artwork'].front_default} alt={pokemon.name} /> 
                 <CardContent>
                     <HeadingMedium>#{pokemon.id} {pokemon.name}</HeadingMedium>
                     <ButtonContainer>
-                    {pokemon.types && pokemon.types.map(type => (
+                        {pokemon.types && pokemon.types.map(type => (
                             <TypeIcon key={type.type.name} color={type.type.name}>
-                            <IconTypes type={type.type.name}/>
+                                <IconTypes type={type.type.name}/>
                             </TypeIcon>
                         ))}
                     </ButtonContainer>
                 </CardContent>
-                <StatsContainer>
-                    <StatList>
-                        <Stat>
-                            <StatName color={pokemon.types[0].type.name}>
-                                <ContentRegular>HP</ContentRegular>
-                            </StatName>
-                            <div>{pokemon.stats[0].base_stat}</div>
-                        </Stat>
-                        <Stat>
-                            <StatName color={pokemon.types[0].type.name}>
-                                <ContentRegular>ATTACK</ContentRegular>
-                            </StatName>
-                            <div>{pokemon.stats[1].base_stat}</div>
-                        </Stat>
-                        <Stat>
-                            <StatName color={pokemon.types[0].type.name}>
-                                <ContentRegular>DEFENSE</ContentRegular>
-                            </StatName>
-                            <div>{pokemon.stats[2].base_stat}</div>
-                        </Stat>
-                    </StatList>
-                    <StatList>
-                        <Stat>
-                            <StatName color={pokemon.types[1] ? pokemon.types[1].type.name : pokemon.types[0].type.name}>
-                                <ContentRegular>SPEED</ContentRegular>
-                            </StatName>
-                            <div>{pokemon.stats[5].base_stat}</div>
-                        </Stat>
-                        <Stat>
-                            <StatName color={pokemon.types[1] ? pokemon.types[1].type.name : pokemon.types[0].type.name}>
-                                <ContentRegular>SP. ATK.</ContentRegular>
-                            </StatName>
-                            <div>{pokemon.stats[3].base_stat}</div>
-                        </Stat>
-                        <Stat>
-                            <StatName color={pokemon.types[1] ? pokemon.types[1].type.name : pokemon.types[0].type.name}>
-                                <ContentRegular>SP. DEF.</ContentRegular>
-                            </StatName>
-                            <div>{pokemon.stats[4].base_stat}</div>
-                        </Stat>
-                    </StatList>
-                </StatsContainer>
+                <PokeDetails pokemon={pokemon} />
                 <CardContent>
                     <Button onClick={catchPokemon}>
                         <PokeBallIcon />
@@ -114,7 +73,81 @@ const PokemonCard = ({ id, setWildPokemon }) => {
     )
 }
 
-export default PokemonCard;
+export const PokemonItemCart = ({ pokemon, cartId }) => {
+    const dispatch = useDispatch();
+
+    function removePokemon(e) {
+        e.preventDefault();
+        console.log("Removed Pokemon");
+        console.log(cartId);
+        dispatch(removeFromCart(cartId));
+    }
+
+    return (
+        <PokeItemCard color={pokemon.types[0].type.name}>
+            <div className='title-card'>
+                <HeadingSmall>#{pokemon.id} {pokemon.name}</HeadingSmall>
+            </div>
+            <div>
+                <img src={pokemon.sprites.other['official-artwork'].front_default} alt={pokemon.name} />
+                <div className='displayed'>
+                    <IconButton onClick={removePokemon}>
+                        <TrashIcon/>
+                    </IconButton>
+                    <PokeDetails pokemon={pokemon} />
+                </div>
+            </div>
+        </PokeItemCard>
+        
+    )
+}
+
+const PokeDetails = ({ pokemon }) => {
+    return (
+        <StatsContainer>
+            <StatList>
+                <Stat>
+                    <StatName color={pokemon.types[0].type.name}>
+                        <ContentRegular>HP</ContentRegular>
+                    </StatName>
+                            <div>{pokemon.stats[0].base_stat}</div>
+                </Stat>
+                <Stat>
+                    <StatName color={pokemon.types[0].type.name}>
+                        <ContentRegular>ATTACK</ContentRegular>
+                    </StatName>
+                    <div>{pokemon.stats[1].base_stat}</div>
+                </Stat>
+                <Stat>
+                    <StatName color={pokemon.types[0].type.name}>
+                        <ContentRegular>DEFENSE</ContentRegular>
+                    </StatName>
+                    <div>{pokemon.stats[2].base_stat}</div>
+                </Stat>
+            </StatList>
+            <StatList>
+                <Stat>
+                    <StatName color={pokemon.types[1] ? pokemon.types[1].type.name : pokemon.types[0].type.name}>
+                        <ContentRegular>SPEED</ContentRegular>
+                    </StatName>
+                    <div>{pokemon.stats[5].base_stat}</div>
+                </Stat>
+                <Stat>
+                    <StatName color={pokemon.types[1] ? pokemon.types[1].type.name : pokemon.types[0].type.name}>
+                        <ContentRegular>SP. ATK.</ContentRegular>
+                    </StatName>
+                    <div>{pokemon.stats[3].base_stat}</div>
+                </Stat>
+                <Stat>
+                    <StatName color={pokemon.types[1] ? pokemon.types[1].type.name : pokemon.types[0].type.name}>
+                        <ContentRegular>SP. DEF.</ContentRegular>
+                    </StatName>
+                    <div>{pokemon.stats[4].base_stat}</div>
+                </Stat>
+            </StatList>
+        </StatsContainer>
+    )
+}
 
 const PokeCard = styled.div`
     width: 380px;
@@ -134,6 +167,52 @@ const PokeCard = styled.div`
         object-fit: contain;
     }
 `;
+
+const PokeItemCard = styled.div`
+    min-width: 100px;
+    padding: 0;
+    background-color: #f6f6f954;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.3);
+
+    img {
+        width: 160px;
+        object-fit: contain;
+        padding: 10px;
+    }
+
+    div {   
+       display: flex;
+       justify-content: center;
+    }
+
+    .displayed {
+        padding: 10px;
+        background-color: #f6f6f954;
+        border-radius: 0 0 10px 0;
+        position: relative;
+    }
+
+    button {
+        position: absolute;
+        top: -15px;
+        right: 15px;
+        background-color: ${props => props.color && colorTypes(props.color)};
+
+        &:hover {
+            color: ${props => props.color && colorTypes(props.color)};
+        }
+    }
+
+    .title-card {
+        background-color: ${props => props.color && colorTypes(props.color)};
+        color: #fff;
+        border-radius: 10px 10px 0 0;
+    }
+`;
+
 
 const StatsContainer = styled.div`
   display: flex;
