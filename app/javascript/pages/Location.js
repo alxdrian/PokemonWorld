@@ -25,6 +25,37 @@ const Location = () => {
         data();
     }, []);
 
+
+    function verifyCoords() {
+        const mapCoords = document.querySelector(".area-map").getBoundingClientRect();
+        const trainerCoords = document.querySelector(".trainer").getBoundingClientRect();
+        if (trainerCoords.top < mapCoords.top) {
+            setTrainer({
+                ...trainer,
+                top: trainer.top - 10,
+                direction: 0,
+            });
+        } else if (trainerCoords.left < mapCoords.left) {
+            setTrainer({
+                ...trainer,
+                left: trainer.left - 10,
+                direction: 270,
+            });
+        } else if (trainerCoords.bottom > mapCoords.bottom) {
+            setTrainer({
+                ...trainer,
+                top: trainer.top + 10,
+                direction: 180,
+            });
+        } else if (trainerCoords.right > mapCoords.right) {
+            setTrainer({
+                ...trainer,
+                left: trainer.left + 10,
+                direction: 90,
+            });
+        }
+    }
+
     function moveTrainer (e){
         e.preventDefault();
         if (e.key === "ArrowUp") {
@@ -53,6 +84,7 @@ const Location = () => {
             });
         }
         setMoving(true);
+        verifyCoords();
         setTimeout(() => {
             setMoving(false);
         }, 400);
@@ -73,8 +105,9 @@ const Location = () => {
                 </ul>
             </NavBar>
             <GameContainer>
-                <AreaMapContainer tabIndex="0" onKeyDown={moveTrainer}>
+                <AreaMapContainer className="area-map" tabIndex="0" onKeyDown={moveTrainer}>
                     <Trainer
+                    className="trainer"
                     top={trainer.top}
                     left={trainer.left}
                     direction={trainer.direction}
@@ -84,6 +117,12 @@ const Location = () => {
                         <img src="https://archives.bulbagarden.net/media/upload/3/38/RedFRLGwalkdown.png" alt="trainer" />
                         }
                     </Trainer>
+                    <div className="tail-grass" />
+                    <div className="tail-grass" />
+                    <div className="tail-grass" />
+                    <div className="tail-grass" />
+                    <div className="tail-grass" />
+                    <div className="tail-grass" />
                 </AreaMapContainer>
             </GameContainer>
         </>
