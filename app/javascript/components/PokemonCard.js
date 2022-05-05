@@ -64,7 +64,7 @@ export const PokemonEncounterCard = ({ id, setWildPokemon }) => {
                         <ContentRegular>ATRAPAR !</ContentRegular>
                     </Button>
                     <Button onClick={leavePokemon}>
-                        <ContentRegular>ESCAPAR</ContentRegular>
+                        <ContentRegular>HUIR</ContentRegular>
                     </Button>
                 </CardContent>
             </>
@@ -210,6 +210,7 @@ const PokeItemCard = styled.div`
         background-color: ${props => props.color && colorTypes(props.color)};
         color: #fff;
         border-radius: 10px 10px 0 0;
+        text-transform: capitalize;
     }
 `;
 
