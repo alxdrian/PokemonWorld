@@ -43,6 +43,12 @@ export const AreaMapContainer = styled.div`
     }
 `;
 
+export const ButtonContainer = styled.div`
+  display: flex;
+  gap: 20px;
+  align-items: center;
+`;
+
 
 export const GameContainer = styled.div`
     width: 100%;
@@ -51,4 +57,31 @@ export const GameContainer = styled.div`
     background: rgb(115,114,114);
     background: linear-gradient(0deg, rgba(115,114,114,1) 0%, rgba(203,203,204,1) 56%, rgba(228,228,228,1) 100%);
     z-index: 2;
+    position: relative;
+`;
+
+export const GameALert = styled.div`
+    top: 10px;
+    left: 60px;
+    width: 300px;
+    height: 40px;
+    background-color: #FFB75E;
+    border-radius: 5px;
+    position: absolute;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const GameModal = styled.div`
+    width: calc(100% - 120px);
+    height: calc(100% - 120px);
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    top: 60px;
+    left: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;

@@ -1,8 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { GameContainer, AreaMapContainer } from "../components/UI/Container";
+import { GameContainer, AreaMapContainer, GameALert, GameModal } from "../components/UI/Container";
 import { Trainer } from "../components/Trainer";
 import { fetchLocationArea } from "../services/LocationFetch";
+import WildPokemon from "./WildPokemon";
+import PokemonCard from "./PokemonCard";
 
 const LocationArea = ({id}) => {
     const [moving, setMoving] = useState(false);
@@ -12,24 +14,48 @@ const LocationArea = ({id}) => {
         left: 0,
         direction: 0,
     });
-    const [wildPokemon, setWildPokemon] = useState({});
+    const [wildPokemon, setWildPokemon] = useState({
+        name: "",
+        url: "",
+    });
+    const defaultPokes = [
+        {
+            name: "Bulbasaur",
+            url: "https://pokeapi.co/api/v2/pokemon/1/",
+            encounter_details: {
+                chance: 30,
+            }
+        },
+        {
+            name: "Charmander",
+            url: "https://pokeapi.co/api/v2/pokemon/4/",
+            encounter_details: {
+                chance: 30,
+            }
+        },
+        {
+            name: "Squirtle",
+            url: "https://pokeapi.co/api/v2/pokemon/7/",
+            encounter_details: {
+                chance: 30,
+            }
+        }
+    ]
 
     useEffect(() => {
         const data = async () => {
             const response = await fetchLocationArea(id);
             const responsePokemon = response.pokemon_encounters.filter(pokemon => pokemon.version_details.some(version => version.version.name === "red"))
-            const pokes = responsePokemon.map(pokemon => {
-                return {
+            const pokes = responsePokemon.map(pokemon => pokemon = {
                     name: pokemon.pokemon.name,
                     url: pokemon.pokemon.url,
                     encounter_details: pokemon.version_details.find(version => version.version.name === "red").encounter_details[0]
-                }
             })
-            setPokemon(pokes);
+            
+            pokes.length > 0 ? setPokemon(pokes) : setPokemon(defaultPokes);
         }
         data();
     }, []);
-
 
     function verifyCoords() {
         const mapCoords = document.querySelector(".area-map").getBoundingClientRect();
@@ -101,8 +127,6 @@ const LocationArea = ({id}) => {
     function encounterPokemon() {
         const chance = Math.floor((Math.random() * (71-1))+1);
         if (chance === 1) {
-            console.log("catch time");
-            console.log(pokemon);
             const posibles = [];
             pokemon.forEach(pokemon => {
                 for (let i = 0; i < pokemon.encounter_details.chance; i++) {
@@ -124,10 +148,10 @@ const LocationArea = ({id}) => {
                     direction={trainer.direction}
                 >
                     {!moving ? 
-                        <img src="https://archives.bulbagarden.net/media/upload/archive/c/c3/20120801043017%21Red_E_OD.png" alt="trainer" /> :
-                        <img src="https://archives.bulbagarden.net/media/upload/3/38/RedFRLGwalkdown.png" alt="trainer" />
+                        <img src="https://archives.bulbagarden.net/media/upload/archive/c/c3/20120801043017%21Red_E_OD.png" alt="trainer" className="trainer-sprite"/> :
+                        <img src="https://archives.bulbagarden.net/media/upload/3/38/RedFRLGwalkdown.png" alt="trainer" className="trainer-sprite"/>
                     }
-                    {wildPokemon.name && <div className="wild-pokemon">{wildPokemon.name}</div>}
+                    {wildPokemon.name !="" && <WildPokemon id={wildPokemon.url.split("/")[6]}/>}
                 </Trainer>
                 <div className="tail-grass" />
                 <div className="tail-grass" />
@@ -136,6 +160,14 @@ const LocationArea = ({id}) => {
                 <div className="tail-grass" />
                 <div className="tail-grass" />
             </AreaMapContainer>
+            {wildPokemon.name != "" && (
+            <>
+                <GameALert>A wild {wildPokemon.name} appeared!</GameALert>
+                <GameModal>
+                    <PokemonCard id={wildPokemon.url.split("/")[6]} />
+                </GameModal>
+            </>
+            )}
         </GameContainer>
     )
 }

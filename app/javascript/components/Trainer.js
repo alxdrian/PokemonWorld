@@ -8,7 +8,7 @@ export const Trainer = styled.div`
     left: calc(50% - ${props => props.left}px);
     ${props => props.direction && `transform: rotate(${props.direction}deg)`};
    
-    img {
+    .trainer-sprite {
         width: 64px;
         height: 64px;
         object-fit: contain;
