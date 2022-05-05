@@ -17,6 +17,7 @@ const cartSlice = createSlice({
         },
         removeFromCart: (state, action) => {
             state.cart[action.payload] = undefined;
+            state.cart = Object.fromEntries(Object.entries(state.cart).filter(([key, value]) => value !== undefined));
         },
         setStep: (state, action) => {
             state.step = action.payload;

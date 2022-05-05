@@ -1,9 +1,10 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { useSelector } from "react-redux";
 import { PokemonItemCart } from "../components/PokemonCard";
 import Header from "../components/UI/Header";
-import { ContentRegular, HeadingMedium } from "../components/UI/Text";
+import { ContentRegular, ContentSmall, HeadingMedium } from "../components/UI/Text";
 import { Button, IconButton } from "../components/UI/Button";
 import { useDispatch } from "react-redux";
 import { setStep } from "../redux/reducers/cartSlice";
@@ -32,11 +33,14 @@ const Cart = () => {
                 </CartStep>
             )}
             {cartStore.step === 2 && (
+                <Payment />
+            )}
+            {cartStore.step === 3 && (
                 <CartStep>
-                    <HeadingMedium>Pago</HeadingMedium>
-                    <IconButton onClick={(e)=>{dispatch(setStep(1))}}>
-                        <ArrowIconLeft />
-                    </IconButton>
+                    <HeadingMedium>Pago realizado</HeadingMedium>
+                    <ContentSmall>
+                        Gracias por tu compra.
+                    </ContentSmall>
                 </CartStep>
             )}
         </>
@@ -44,6 +48,42 @@ const Cart = () => {
 }
 
 export default Cart;
+
+const Payment = () => {
+    const dispatch = useDispatch();
+    const [counter, setCounter] = useState({});
+    const cartStore = useSelector(state => state.cart);
+
+    useEffect(() => {
+        let count = {};
+        Object.keys(cartStore.cart).forEach(key => {
+            if (count[cartStore.cart[key].name]) {
+                count[cartStore.cart[key].name] += 1;
+            } else {
+                count[cartStore.cart[key].name] = 1;
+            }
+        });
+        setCounter(count);
+    }, [cartStore]);
+
+    return (
+        <CartStep>
+            <HeadingMedium>Pago</HeadingMedium>
+            <IconButton onClick={(e)=>{dispatch(setStep(1))}}>
+                <ArrowIconLeft />
+            </IconButton>
+            <ContentRegular>Resumen de la compra</ContentRegular>
+            {counter !== {} && Object.keys(counter).map((key, index) => (
+                <div>
+                    <ContentRegular>{key}: {counter[key]}</ContentRegular>
+                </div>
+            ))}
+            <Button onClick={(e) => dispatch(setStep(3))}>
+                Confirmar Pago
+            </Button>
+        </CartStep>
+    );
+}
 
 const CartStep = styled.div`
     width: 100%;
