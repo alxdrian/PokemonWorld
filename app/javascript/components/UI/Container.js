@@ -102,15 +102,17 @@ export const GameContainer = styled.div`
 export const GameALert = styled.div`
     top: 10px;
     left: 60px;
-    width: 300px;
+    width: 400px;
     height: 40px;
-    background-color: #FFB75E;
+    background-color: #df7553;
     border-radius: 5px;
     position: absolute;
     z-index: 3;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-weight: bold;
+    color: #fff;
 `;
 
 export const GameModal = styled.div`

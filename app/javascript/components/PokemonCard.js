@@ -100,14 +100,6 @@ export const PokemonItemCart = ({ pokemon, cartId }) => {
 
 const PokeDetails = ({ pokemon }) => {
     return (
-        <>
-            <ButtonContainer>
-                        {pokemon.types && pokemon.types.map(type => (
-                            <TypeIcon key={type.type.name} color={type.type.name}>
-                                <IconTypes type={type.type.name}/>
-                            </TypeIcon>
-                        ))}
-                    </ButtonContainer>
             <StatsContainer>
             <StatList>
                 <Stat>
@@ -150,7 +142,6 @@ const PokeDetails = ({ pokemon }) => {
                 </Stat>
             </StatList>
         </StatsContainer>
-        </>
     )
 }
 
@@ -198,9 +189,6 @@ const PokeItemCard = styled.div`
         background-color: #f6f6f954;
         border-radius: 0 0 10px 0;
         position: relative;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
     }
 
     button {

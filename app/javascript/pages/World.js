@@ -2,9 +2,11 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/UI/Header";
-import { RegionMapContainer } from "../components/UI/Container";
+import { RegionMapContainer, ButtonContainer } from "../components/UI/Container";
 import { fetchLocations } from "../services/LocationFetch";
 import { ContentRegular } from "../components/UI/Text";
+import { Title } from "../components/UI/Text";
+import { Button } from "../components/UI/Button";
 
 const World = () => {
   const [locations, setLocations] = useState([]);
@@ -22,7 +24,15 @@ const World = () => {
   return (
     <>
         <Header>
-            Pokemon World
+          <Title>Welcome to Pokemon World!</Title>
+          <ButtonContainer>
+            <Link to={"/cart"}>
+              <Button>CART</Button>
+            </Link>
+            <Link to={"/pokemon"}>
+              <Button>POKEMON</Button>
+            </Link>
+          </ButtonContainer>
         </Header>
         <RegionMapContainer>
             <div className="map-container">

@@ -23,6 +23,8 @@ export const NavBar = styled.nav`
         align-items: center;
         color: #fff;
         border-radius: 10px 10px 0 0;
+        text-align: center;
+        font-weight: bold;
 
         &:hover {
             cursor: pointer;

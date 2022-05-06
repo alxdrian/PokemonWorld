@@ -4,9 +4,12 @@ import styled from "@emotion/styled";
 import Header from "../components/UI/Header";
 import { useSelector } from "react-redux";
 import { PokemonItemCart } from "../components/PokemonCard";
-import { HeadingMedium } from "../components/UI/Text";
+import { HeadingMedium, Title } from "../components/UI/Text";
 import { colorTypes } from "../helpers/colorTypes";
 import { IconTypes } from "../components/IconTypes";
+import { ButtonContainer } from "../components/UI/Container";
+import { Link } from "react-router-dom";
+import { Button } from "../components/UI/Button";
 
 const Pokemon = () => {
     const pokemonStore = useSelector(state => state.pokemon);
@@ -27,7 +30,17 @@ const Pokemon = () => {
 
     return (
         <>
-            <Header>Pokemon</Header>
+            <Header>
+                <Title>Your Pokemon</Title>
+                <ButtonContainer>
+                    <Link to={"/world"}>
+                    <Button>WORLD</Button>
+                    </Link>
+                    <Link to={"/cart"}>
+                    <Button>CART</Button>
+                    </Link>
+                </ButtonContainer>
+            </Header>
             <PokemonList>
                 {Object.keys(filterPokemon).map((type) => (
                     <TypeList color={type}>

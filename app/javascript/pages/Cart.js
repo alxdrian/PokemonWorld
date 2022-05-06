@@ -4,22 +4,31 @@ import styled from "@emotion/styled";
 import { useSelector } from "react-redux";
 import { PokemonItemCart } from "../components/PokemonCard";
 import Header from "../components/UI/Header";
-import { ContentRegular, ContentSmall, HeadingMedium } from "../components/UI/Text";
+import { ContentRegular, ContentSmall, HeadingMedium, Title } from "../components/UI/Text";
 import { Button, IconButton } from "../components/UI/Button";
 import { useDispatch } from "react-redux";
 import { setStep, deleteCart } from "../redux/reducers/cartSlice";
 import { ArrowIconLeft } from "../components/UI/Icon";
 import { addPokemon } from "../redux/reducers/pokemonSlice";
+import { ButtonContainer } from "../components/UI/Container";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
     const cartStore = useSelector(state => state.cart);
     const dispatch = useDispatch();
 
-
     return (
         <>
             <Header>
-                <HeadingMedium>Cart</HeadingMedium>
+                <Title>Your Cart</Title>
+                <ButtonContainer>
+                    <Link to={"/world"}>
+                    <Button>WORLD</Button>
+                    </Link>
+                    <Link to={"/pokemon"}>
+                    <Button>POKEMON</Button>
+                    </Link>
+                </ButtonContainer>
             </Header>
             {cartStore.step === 1 && (
                 <CartStep>

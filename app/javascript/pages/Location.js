@@ -4,7 +4,10 @@ import Header from "../components/UI/Header";
 import { fetchLocation } from "../services/LocationFetch";
 import { NavBar } from "../components/UI/Navbar";
 import LocationArea from "../components/LocationArea";
-import { func } from "prop-types";
+import { Title } from "../components/UI/Text";
+import { Button } from "../components/UI/Button";
+import { ButtonContainer } from "../components/UI/Container";
+import { Link } from "react-router-dom";
 
 const Location = () => {
     const locationId = window.location.pathname.split("/")[2];
@@ -32,7 +35,18 @@ const Location = () => {
     return (
         <>
             <Header>
-                Location
+            <Title>{location.name}</Title>
+            <ButtonContainer>
+            <Link to={"/world"}>
+              <Button>WORLD</Button>
+            </Link>
+            <Link to={"/cart"}>
+              <Button>CART</Button>
+            </Link>
+            <Link to={"/pokemon"}>
+              <Button>POKEMON</Button>
+            </Link>
+            </ButtonContainer>
             </Header>
             <NavBar>
                 <ul>
