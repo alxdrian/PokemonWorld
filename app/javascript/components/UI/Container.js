@@ -8,16 +8,55 @@ export const RegionMapContainer = styled.div`
     justify-content: center;
     align-items: center;
 
-    .map {
-        position: relative;
-        width: 100%;
-        height: 100%;
+    a {
+        color: black;
+        opacity: 0.3;
+        transition: all 0.3s ease;
+        font-weight: bold;
+        text-decoration: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-transform: capitalize;
+        text-align: center;
+        border-radius: 10px;
+        background-color: #f6f6f9a1;
 
+        p {
+            opacity: 0;
+        }
+        
+        &:hover {
+            opacity: 1;
+            box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);  
+
+            p {
+                opacity: 1;
+            }
+        }
+    }
+
+    .map-container {
+        position: relative;
+        height: 100%;
+        
         img {
-            width: 100%;
             height: 100%;
             object-fit: contain;
         }
+    }
+
+    .locations-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 10fr));
+        grid-template-rows: repeat(auto-fit, minmax(50px, 10fr));
+        grid-gap: 10px;
+        padding: 30px;
     }
 `;
 

@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/UI/Header";
 import { RegionMapContainer } from "../components/UI/Container";
-import { LocationCard } from "../components/LocationCard";
 import { fetchLocations } from "../services/LocationFetch";
+import { ContentRegular } from "../components/UI/Text";
 
 const World = () => {
   const [locations, setLocations] = useState([]);
@@ -25,19 +25,15 @@ const World = () => {
             Pokemon World
         </Header>
         <RegionMapContainer>
-            <div class="map">
-              <img src="https://i.redd.it/kq8mzkvpkjy51.png" alt="mapKanto" />
-              {locations.map(location => 
-                <Link to={`./${location.url.split("/")[6]}`}>
-                  <LocationCard 
-                    key={location.name}
-                    bottom={Math.round(Math.random(100) * 1000)}
-                    left={Math.round(Math.random(100) * 1000)}
-                  >
-                  {location.name}
-                  </LocationCard>
-                </Link>
-              )}
+            <div className="map-container">
+              <img src="https://i.redd.it/kq8mzkvpkjy51.png" alt="map" />
+              <div className="locations-container">
+                {locations.map(location => 
+                  <Link key={location.name} to={`./${location.url.split("/")[6]}`}>
+                    <ContentRegular>{location.name}</ContentRegular>
+                  </Link>
+                )}
+              </div>
             </div>
             
         </RegionMapContainer>

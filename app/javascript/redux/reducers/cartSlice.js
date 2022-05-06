@@ -19,12 +19,15 @@ const cartSlice = createSlice({
             state.cart[action.payload] = undefined;
             state.cart = Object.fromEntries(Object.entries(state.cart).filter(([key, value]) => value !== undefined));
         },
+        deleteCart: (state, action) => {
+            state.cart = {};
+        },
         setStep: (state, action) => {
             state.step = action.payload;
         }
     }
 });
 
-export const { addToCart, removeFromCart, setStep } = cartSlice.actions;
+export const { addToCart, removeFromCart, setStep, deleteCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

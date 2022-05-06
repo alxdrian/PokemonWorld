@@ -33,8 +33,6 @@ export const PokemonEncounterCard = ({ id, setWildPokemon }) => {
 
     function catchPokemon(e) {
         e.preventDefault();
-        console.log("Caught Pokemon");
-        console.log(pokemon);
         dispatch(addToCart(pokemon));
         setWildPokemon({
             name: "",
@@ -91,9 +89,7 @@ export const PokemonItemCart = ({ pokemon, cartId }) => {
             <div>
                 <img src={pokemon.sprites.other['official-artwork'].front_default} alt={pokemon.name} />
                 <div className='displayed'>
-                    <IconButton onClick={removePokemon}>
-                        <TrashIcon/>
-                    </IconButton>
+                    {cartId && <IconButton onClick={removePokemon}><TrashIcon /></IconButton>}
                     <PokeDetails pokemon={pokemon} />
                 </div>
             </div>
@@ -104,7 +100,15 @@ export const PokemonItemCart = ({ pokemon, cartId }) => {
 
 const PokeDetails = ({ pokemon }) => {
     return (
-        <StatsContainer>
+        <>
+            <ButtonContainer>
+                        {pokemon.types && pokemon.types.map(type => (
+                            <TypeIcon key={type.type.name} color={type.type.name}>
+                                <IconTypes type={type.type.name}/>
+                            </TypeIcon>
+                        ))}
+                    </ButtonContainer>
+            <StatsContainer>
             <StatList>
                 <Stat>
                     <StatName color={pokemon.types[0].type.name}>
@@ -146,6 +150,7 @@ const PokeDetails = ({ pokemon }) => {
                 </Stat>
             </StatList>
         </StatsContainer>
+        </>
     )
 }
 
@@ -193,6 +198,9 @@ const PokeItemCard = styled.div`
         background-color: #f6f6f954;
         border-radius: 0 0 10px 0;
         position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
     }
 
     button {

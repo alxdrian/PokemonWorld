@@ -7,11 +7,12 @@ export const NavBar = styled.nav`
 
   ul {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     width: 100%;
     height: 100%;
     margin: 0;
+    padding: 0;
 
     li {
         list-style: none;
@@ -21,6 +22,7 @@ export const NavBar = styled.nav`
         justify-content: center;
         align-items: center;
         color: #fff;
+        border-radius: 10px 10px 0 0;
 
         &:hover {
             cursor: pointer;

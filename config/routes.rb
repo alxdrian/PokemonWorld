@@ -7,5 +7,6 @@ Rails.application.routes.draw do
 
   get 'world', to: 'world#index'
   get 'cart', to: 'world#index'
+  get 'pokemon', to: 'world#index'
   get 'world/:name', to: 'world#index'
 end

@@ -7,12 +7,14 @@ import Header from "../components/UI/Header";
 import { ContentRegular, ContentSmall, HeadingMedium } from "../components/UI/Text";
 import { Button, IconButton } from "../components/UI/Button";
 import { useDispatch } from "react-redux";
-import { setStep } from "../redux/reducers/cartSlice";
+import { setStep, deleteCart } from "../redux/reducers/cartSlice";
 import { ArrowIconLeft } from "../components/UI/Icon";
+import { addPokemon } from "../redux/reducers/pokemonSlice";
 
 const Cart = () => {
     const cartStore = useSelector(state => state.cart);
     const dispatch = useDispatch();
+
 
     return (
         <>
@@ -27,21 +29,13 @@ const Cart = () => {
                         cartStore.cart[key] && <PokemonItemCart key={index} pokemon={cartStore.cart[key]} cartId={key}/>
                     )}
                 </PokemonList>
-                <Button onClick={(e) => {dispatch(setStep(2))}}>
+                <Button onClick={(e) => {dispatch(setStep(2))}} disabled={Object.keys(cartStore.cart).length < 1}>
                     <ContentRegular>PAGAR</ContentRegular>
                 </Button>
                 </CartStep>
             )}
             {cartStore.step === 2 && (
                 <Payment />
-            )}
-            {cartStore.step === 3 && (
-                <CartStep>
-                    <HeadingMedium>Pago realizado</HeadingMedium>
-                    <ContentSmall>
-                        Gracias por tu compra.
-                    </ContentSmall>
-                </CartStep>
             )}
         </>
     );
@@ -53,6 +47,7 @@ const Payment = () => {
     const dispatch = useDispatch();
     const [counter, setCounter] = useState({});
     const cartStore = useSelector(state => state.cart);
+    const [confirm, setConfirm] = useState(false);
 
     useEffect(() => {
         let count = {};
@@ -66,6 +61,18 @@ const Payment = () => {
         setCounter(count);
     }, [cartStore]);
 
+    const handlePayment = (e) => {
+        e.preventDefault();
+        Object.keys(cartStore.cart).forEach(key => {
+            dispatch(addPokemon(cartStore.cart[key]));
+        });
+        setConfirm(true);
+        setTimeout(() => {
+            dispatch(deleteCart());
+            dispatch(setStep(1));
+        }, 3000);
+    }
+
     return (
         <CartStep>
             <HeadingMedium>Pago</HeadingMedium>
@@ -78,7 +85,15 @@ const Payment = () => {
                     <ContentRegular>{key}: {counter[key]}</ContentRegular>
                 </div>
             ))}
-            <Button onClick={(e) => dispatch(setStep(3))}>
+            {confirm && (
+                <>
+                <HeadingMedium>Pago realizado</HeadingMedium>
+                <ContentSmall>
+                    Gracias por tu compra.
+                </ContentSmall>
+                </>
+            )}
+            <Button onClick={handlePayment}>
                 Confirmar Pago
             </Button>
         </CartStep>
