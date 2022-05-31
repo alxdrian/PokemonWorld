@@ -7,6 +7,7 @@ export const Trainer = styled.div`
     top: calc(50% - ${props => props.top}px);
     left: calc(50% - ${props => props.left}px);
     ${props => props.direction && `transform: rotate(${props.direction}deg)`};
+    z-index: 3;
    
     .trainer-sprite {
         width: 64px;

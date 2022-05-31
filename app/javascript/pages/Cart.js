@@ -9,7 +9,7 @@ import { Button, IconButton } from "../components/UI/Button";
 import { useDispatch } from "react-redux";
 import { setStep, deleteCart } from "../redux/reducers/cartSlice";
 import { ArrowIconLeft } from "../components/UI/Icon";
-import { addPokemon } from "../redux/reducers/pokemonSlice";
+import { addPokemon, addWater, addFire, addElectric, setArticuno, setMoltres, setZapdos } from "../redux/reducers/pokemonSlice";
 import { ButtonContainer } from "../components/UI/Container";
 import { Link } from "react-router-dom";
 
@@ -73,7 +73,15 @@ const Payment = () => {
     const handlePayment = (e) => {
         e.preventDefault();
         Object.keys(cartStore.cart).forEach(key => {
-            dispatch(addPokemon(cartStore.cart[key]));
+            const poke = cartStore.cart[key]
+            dispatch(addPokemon(poke));
+            const types = poke.types.map(type => type.type.name);
+            if (types.includes("water")) dispatch(addWater());
+            if (types.includes("fire")) dispatch(addFire());
+            if (types.includes("electric")) dispatch(addElectric());
+            if (poke.name=="articuno") dispatch(setArticuno());
+            if (poke.name=="zapdos") dispatch(setZapdos());
+            if (poke.name=="moltres") dispatch(setMoltres());
         });
         setConfirm(true);
         setTimeout(() => {

@@ -19,8 +19,6 @@ const World = () => {
     data();
   }, []);
 
-  console.log(locations);
-
   return (
     <>
         <Header>

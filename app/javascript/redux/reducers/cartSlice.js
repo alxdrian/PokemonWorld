@@ -3,7 +3,10 @@ import { v4 as uuidv4 } from 'uuid';
 
 const initialState = {
     cart: {},
-    step: 1
+    step: 1,
+    articuno: false,
+    zapdos: false,
+    moltres: false
 };
 
 const cartSlice = createSlice({
@@ -11,7 +14,6 @@ const cartSlice = createSlice({
     initialState,
     reducers: {
         addToCart: (state, action) => {
-            console.log("Adding to cart");
             const id = uuidv4();
             state.cart[id] = action.payload;
         },
@@ -24,10 +26,19 @@ const cartSlice = createSlice({
         },
         setStep: (state, action) => {
             state.step = action.payload;
+        },
+        cartArticuno: (state, action) => {
+            state.articuno = !state.articuno
+        },
+        cartZapdos: (state, action) => {
+            state.zapdos = !state.zapdos
+        },
+        cartMoltres: (state, action) => {
+            state.moltres = !state.moltres
         }
     }
 });
 
-export const { addToCart, removeFromCart, setStep, deleteCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, setStep, deleteCart, cartArticuno, cartMoltres, cartZapdos } = cartSlice.actions;
 
 export default cartSlice.reducer;

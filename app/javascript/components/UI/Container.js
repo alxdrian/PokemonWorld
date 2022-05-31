@@ -79,6 +79,7 @@ export const AreaMapContainer = styled.div`
         background-size: 20px 20px;
         background-repeat: repeat space;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        opacity: 0.7;
     }
 `;
 
@@ -125,4 +126,5 @@ export const GameModal = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 5;
 `;

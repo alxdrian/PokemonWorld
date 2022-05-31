@@ -6,6 +6,7 @@ import { fetchLocationArea } from "../services/LocationFetch";
 import WildPokemon from "./WildPokemon";
 import { PokemonEncounterCard } from "./PokemonCard";
 import { ContentRegular } from "./UI/Text";
+import { useSelector } from "react-redux";
 
 const LocationArea = ({id}) => {
     const [moving, setMoving] = useState(false);
@@ -42,6 +43,8 @@ const LocationArea = ({id}) => {
             }
         }
     ]
+    const pokemonStore = useSelector(state => state.pokemon);
+    const cartStore = useSelector(state => state.cart)
 
     useEffect(() => {
         const data = async () => {
@@ -134,9 +137,46 @@ const LocationArea = ({id}) => {
                     posibles.push(pokemon);
                 }
             });
+            const count = posibles.length;
+            if (verifyArticuno()) {
+                for (let i = 0; i < count; i++) {
+                    posibles.push({
+                        name: "articuno",
+                        url: "https://pokeapi.co/api/v2/pokemon/144/"
+                    });
+                }
+            }
+            if (verifyZapdos()) {
+                for (let i = 0; i < count; i++) {
+                    posibles.push({
+                        name: "zapdos",
+                        url: "https://pokeapi.co/api/v2/pokemon/145/"
+                    });
+                }
+            }
+            if (verifyMoltres()) {
+                for (let i = 0; i < count; i++) {
+                    posibles.push({
+                        name: "moltres",
+                        url: "https://pokeapi.co/api/v2/pokemon/146/"
+                    });
+                }
+            }
             const appeared = posibles[Math.floor(Math.random() * posibles.length)];
             setWildPokemon(appeared);
         }
+    }
+
+    function verifyArticuno() {
+        return (pokemonStore.water > 10 && !pokemonStore.articuno && !cartStore.articuno) ? true : false
+    }
+
+    function verifyZapdos() {
+        return (pokemonStore.electric > 10 && !pokemonStore.zapdos && !cartStore.zapdos) ? true : false
+    }
+
+    function verifyMoltres() {
+        return (pokemonStore.fire > 10 && !pokemonStore.moltres && !cartStore.moltres) ? true : false
     }
 
     return (

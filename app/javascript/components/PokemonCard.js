@@ -10,6 +10,7 @@ import { ButtonContainer } from './UI/Container';
 import { Button, IconButton } from './UI/Button';
 import { PokeBallIcon, TrashIcon } from './UI/Icon';
 import { addToCart, removeFromCart } from '../redux/reducers/cartSlice';
+import { cartArticuno, cartMoltres, cartZapdos } from '../redux/reducers/cartSlice';
 
 export const PokemonEncounterCard = ({ id, setWildPokemon }) => {
     const [pokemon, setPokemon] = useState({});
@@ -34,6 +35,9 @@ export const PokemonEncounterCard = ({ id, setWildPokemon }) => {
     function catchPokemon(e) {
         e.preventDefault();
         dispatch(addToCart(pokemon));
+        if (pokemon.name=="articuno") dispatch(cartArticuno());
+        if (pokemon.name=="moltres") dispatch(cartMoltres());
+        if (pokemon.name=="zapdos") dispatch(cartZapdos());
         setWildPokemon({
             name: "",
             url: "",
@@ -76,9 +80,10 @@ export const PokemonItemCart = ({ pokemon, cartId }) => {
 
     function removePokemon(e) {
         e.preventDefault();
-        console.log("Removed Pokemon");
-        console.log(cartId);
         dispatch(removeFromCart(cartId));
+        if (pokemon.name=="articuno") dispatch(cartArticuno());
+        if (pokemon.name=="moltres") dispatch(cartMoltres());
+        if (pokemon.name=="zapdos") dispatch(cartZapdos());
     }
 
     return (

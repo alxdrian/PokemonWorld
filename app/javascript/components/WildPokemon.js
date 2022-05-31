@@ -27,8 +27,6 @@ const WildPokemonContainer = styled.div`
     height: 100px;
     width: 100px;
     transform: rotate(180deg);
-    border-radius: 50%;
-    box-shadow: 0px 0px 10px #43b251;
     transition: all 0.5s;
 
     img {

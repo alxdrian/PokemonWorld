@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import { Button } from "../components/UI/Button";
 
 const Pokemon = () => {
-    const pokemonStore = useSelector(state => state.pokemon);
+    const pokemonStore = useSelector(state => state.pokemon).catched;
     const [filterPokemon, setFilterPokemon] = useState([]);
 
     useEffect(() => {
